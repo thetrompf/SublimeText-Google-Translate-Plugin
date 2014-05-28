@@ -43,23 +43,23 @@ class GoTranslateCommand(sublime_plugin.TextCommand):
         return True
     return False
 
-class GoTranslateWithTargetLanguageFromInputCommand(sublime_plugin.WindowCommand):
+class GoTranslateWithTargetLanguageFromInputCommand(sublime_plugin.TextCommand):
 
-  def run(self):
+  def run(self, edit):
     global last_source_language
-    self.window.show_input_panel('Source langauge', last_source_language,
+    self.view.window().show_input_panel('Source langauge', last_source_language,
       self.on_source_done, self.on_source_change, self.on_source_cancel)
 
   def on_source_done(self, input):
     global last_source_language, last_target_language
     last_source_language = input
-    self.window.show_input_panel('Target langauge', last_target_language,
+    self.view.window().show_input_panel('Target langauge', last_target_language,
       self.on_target_done, self.on_target_change, self.on_target_cancel)
 
   def on_target_done(self,input):
     global last_source_language, last_target_language
     last_target_language = input
-    self.window.active_view().run_command('go_translate', {"source_language": last_source_language, "target_language": last_target_language})
+    self.view.run_command('go_translate', {"source_language": last_source_language, "target_language": last_target_language})
 
   def on_source_change(self, input):
     pass
@@ -72,6 +72,12 @@ class GoTranslateWithTargetLanguageFromInputCommand(sublime_plugin.WindowCommand
 
   def on_target_cancel(self):
     pass
+
+  def is_visible(self):
+    for region in self.view.sel():
+      if not region.empty():
+        return True
+    return False
 
 def translate(text, sl, tl):
   if sl:
