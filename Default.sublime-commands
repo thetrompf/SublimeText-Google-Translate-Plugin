@@ -2,5 +2,9 @@
   {
     "caption":"Google Translate selected text",
     "command": "go_translate"
+  },
+  {
+    "caption":"Google Translate with target language from input",
+    "command": "go_translate_with_target_language_from_input"
   }
 ]
