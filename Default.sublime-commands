@@ -4,7 +4,11 @@
     "command": "go_translate"
   },
   {
-    "caption":"Google Translate with target language from input",
-    "command": "go_translate_with_target_language_from_input"
+    "caption":"Google Translate lang from input",
+    "command": "go_translate_with_target_and_source_language_from_input"
+  },
+  {
+    "caption":"Google Translate lang from input - reverse",
+    "command": "go_translate_with_target_and_source_language_from_input_reverse"
   }
 ]

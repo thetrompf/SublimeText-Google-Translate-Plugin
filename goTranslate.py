@@ -43,7 +43,7 @@ class GoTranslateCommand(sublime_plugin.TextCommand):
         return True
     return False
 
-class GoTranslateWithTargetLanguageFromInputCommand(sublime_plugin.TextCommand):
+class GoTranslateWithTargetAndSourceLanguageFromInputCommand(sublime_plugin.TextCommand):
 
   def run(self, edit):
     global last_source_language
@@ -72,6 +72,22 @@ class GoTranslateWithTargetLanguageFromInputCommand(sublime_plugin.TextCommand):
 
   def on_target_cancel(self):
     pass
+
+  def is_visible(self):
+    for region in self.view.sel():
+      if not region.empty():
+        return True
+    return False
+
+class GoTranslateWithTargetAndSourceLanguageFromInputReverseCommand(sublime_plugin.TextCommand):
+
+  def run(self, edit):
+    global last_source_language, last_target_language
+    target = last_source_language
+    source = last_target_language
+    last_target_language = target
+    last_source_language = source
+    self.view.run_command('go_translate', {"source_language": last_source_language, "target_language": last_target_language})
 
   def is_visible(self):
     for region in self.view.sel():
